@@ -5,16 +5,16 @@ import { UserSettingsService } from '../../core/user-settings.service';
 import { ArweaveService } from '../../core/arweave.service';
 import { MatDialog } from '@angular/material/dialog';
 import {
-  FileManagerDialogComponent 
+  FileManagerDialogComponent
 } from '../../shared/file-manager-dialog/file-manager-dialog.component';
 import {
-  UploadFileDialogComponent 
+  UploadFileDialogComponent
 } from '../../shared/upload-file-dialog/upload-file-dialog.component';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UtilsService } from '../../core/utils.service';
-import { Subscription, of, Observable } from 'rxjs'; 
+import { Subscription, of, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ArwikiTokenContract } from '../../core/arwiki-contracts/arwiki-token.service';
 import { ActivatedRoute } from '@angular/router';
@@ -39,21 +39,21 @@ import { ArwikiPagesService } from '../../core/arwiki-contracts/arwiki-pages.ser
   styleUrls: ['./new.component.scss']
 })
 export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
-	public authorAddress: string = this._auth.getMainAddressSnapshot();
-	defaultTheme: string = '';
-	loadingFrm: boolean = false;
-	frmNew: UntypedFormGroup = new UntypedFormGroup({
-		title: new UntypedFormControl('', [Validators.required, Validators.maxLength(150)]),
-		slug: new UntypedFormControl('', [Validators.required, Validators.maxLength(150)]),
+  public authorAddress: string = this._auth.getMainAddressSnapshot();
+  defaultTheme: string = '';
+  loadingFrm: boolean = false;
+  frmNew: UntypedFormGroup = new UntypedFormGroup({
+    title: new UntypedFormControl('', [Validators.required, Validators.maxLength(150)]),
+    slug: new UntypedFormControl('', [Validators.required, Validators.maxLength(150)]),
     category: new UntypedFormControl('', [Validators.required]),
     language: new UntypedFormControl('', [Validators.required]),
     pageValue: new UntypedFormControl(1),
     useDispatch: new UntypedFormControl(false)
-	});
-	txmessage: string = '';
+  });
+  txmessage: string = '';
   previewImgUrl: string = '';
   previewImgUrlTX: string = '';
-  simplemde: SimpleMDE|null = null;
+  simplemde: SimpleMDE | null = null;
   visible = true;
   selectable = true;
   removable = true;
@@ -71,20 +71,20 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
   private _redirectTimeout: any = null;
   savingPageSubscription = Subscription.EMPTY;
 
-  emojisPortal: ComponentPortal<EmojisComponent>|null = null;
-  overlayRef: OverlayRef|null = null;
+  emojisPortal: ComponentPortal<EmojisComponent> | null = null;
+  overlayRef: OverlayRef | null = null;
   loadEditorSubscription: Subscription = Subscription.EMPTY;
   @ViewChild('frmTextareaEditor') frmTextareaEditor!: ElementRef;
 
   public get title() {
-		return this.frmNew.get('title');
-	}
-	public get slug() {
-		return this.frmNew.get('slug');
-	}
-	public get category() {
-		return this.frmNew.get('category');
-	}
+    return this.frmNew.get('title');
+  }
+  public get slug() {
+    return this.frmNew.get('slug');
+  }
+  public get category() {
+    return this.frmNew.get('category');
+  }
   public get language() {
     return this.frmNew.get('language');
   }
@@ -95,18 +95,18 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.frmNew.get('useDispatch');
   }
 
-	goBack() {
-  	this._location.back();
+  goBack() {
+    this._location.back();
   }
 
   constructor(
-  	private _location: Location,
+    private _location: Location,
     private _userSettings: UserSettingsService,
     private _arweave: ArweaveService,
     private _auth: AuthService,
     public _dialog: MatDialog,
-  	private _router: Router,
-  	private _utils: UtilsService,
+    private _router: Router,
+    private _utils: UtilsService,
     private _arwikiTokenContract: ArwikiTokenContract,
     private _route: ActivatedRoute,
     private _overlay: Overlay,
@@ -119,7 +119,7 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
     this.routeLang = this._route.snapshot.paramMap.get('lang')!;
     this.arwikiQuery = new ArwikiQuery(this._arweave.arweave);
     this.arwiki = new Arwiki(this._arweave.arweave);
-  	this.getDefaultTheme();
+    this.getDefaultTheme();
 
     this.categoryListSubscription = this._arwikiCategories
       .getCategories(this.routeLang)
@@ -153,7 +153,7 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
           this.language!.setValue(this.routeLang);
           this.title!.enable();
           this.slug!.enable();
-    
+
         },
         error: (error) => {
           this._utils.message(error, 'error');
@@ -180,39 +180,39 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   getDefaultTheme() {
-  	this.defaultTheme = this._userSettings.getDefaultTheme();
+    this.defaultTheme = this._userSettings.getDefaultTheme();
     this._userSettings.defaultThemeStream.subscribe(
-    	(theme) => {
-    		this.defaultTheme = theme;
-    	}
+      (theme) => {
+        this.defaultTheme = theme;
+      }
     );
   }
 
 
   getSkeletonLoaderAnimationType() {
-  	let type = 'false';
-  	if (this.defaultTheme === 'arwiki-dark') {
-  		// type = 'progress-dark';
-  	}
-  	return type;
+    let type = 'false';
+    if (this.defaultTheme === 'arwiki-dark') {
+      // type = 'progress-dark';
+    }
+    return type;
   }
 
   getSkeletonLoaderThemeNgStyle() {
-  	let ngStyle: any = {
-  		'height.px': '320',
-  		'width': '100%'
-  	};
-  	if (this.defaultTheme === 'arwiki-dark') {
-  		ngStyle['background-color'] = '#3d3d3d';
-  	}
+    let ngStyle: any = {
+      'height.px': '320',
+      'width': '100%'
+    };
+    if (this.defaultTheme === 'arwiki-dark') {
+      ngStyle['background-color'] = '#3d3d3d';
+    }
 
-  	return ngStyle;
+    return ngStyle;
   }
 
   async onSubmit() {
-  	const title = this.title!.value;
-  	const slug = this.slug!.value;
-  	const category = this.category!.value;
+    const title = this.title!.value;
+    const slug = this.slug!.value;
+    const category = this.category!.value;
     const langCode = this.language!.value;
     const content = this.simplemde!.value();
     const img = this.previewImgUrlTX;
@@ -222,22 +222,22 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
       this._utils.message('Please add some content to your page :)', 'error');
       return;
     }
-    
-  	this.disableForm(true);
+
+    this.disableForm(true);
 
     const target = '';
     const fee = '';
 
-  	// Save data 
+    // Save data 
     const newPage: ArwikiPage = {
-        id: '',
-        title: title,
-        slug: slug,
-        category: category,
-        language: langCode,
-        value: pageValue,
-        img: img,
-        rawContent: content
+      id: '',
+      title: title,
+      slug: slug,
+      category: category,
+      language: langCode,
+      value: pageValue,
+      img: img,
+      rawContent: content
     };
     const disableDispatch = !this.useDispatch!.value;
     this.savingPageSubscription = this.savePage(newPage, disableDispatch).subscribe({
@@ -255,27 +255,27 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
         this.disableForm(false);
       }
     });
-  	
+
   }
 
   disableForm(disable: boolean) {
-  	if (disable) {
-  		this.title!.disable();
-	  	this.slug!.disable();
+    if (disable) {
+      this.title!.disable();
+      this.slug!.disable();
       this.pageValue!.disable();
-	  	this.category!.disable();
+      //this.category!.disable();
       this.language!.disable();
       this.loadingFrm = true;
       this.useDispatch!.disable();
-  	} else {
-  		this.title!.enable();
-	  	this.slug!.enable();
-	  	this.category!.enable();
+    } else {
+      this.title!.enable();
+      this.slug!.enable();
+      //this.category!.enable();
       this.language!.enable();
       this.pageValue!.enable();
       this.loadingFrm = false;
       this.useDispatch!.enable();
-  	}
+    }
   }
 
   setPreviewImage(imgUrl: string) {
@@ -306,32 +306,32 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.verifySlugSubscription = this.isPageBySlugAlreadyTaken(
-        _slug, _langCode, maxHeight
-      ).subscribe({
-        next: (taken) => {
-          // Slug already taken
-          if (taken) {
-            this._utils.message(`Slug already taken! Please try another one`, 'error');
-            this.slug!.setValue('');
-          } else {
-            this._utils.message('Slug available!', 'success');
-          }
-
-          this.slug!.enable();
-        },
-        error: (error) => {
-          this._utils.message(error, 'error');
+      _slug, _langCode, maxHeight
+    ).subscribe({
+      next: (taken) => {
+        // Slug already taken
+        if (taken) {
+          this._utils.message(`Slug already taken! Please try another one`, 'error');
           this.slug!.setValue('');
-          this.slug!.enable();
+        } else {
+          this._utils.message('Slug available!', 'success');
         }
-      });
+
+        this.slug!.enable();
+      },
+      error: (error) => {
+        this._utils.message(error, 'error');
+        this.slug!.setValue('');
+        this.slug!.enable();
+      }
+    });
   }
 
   clearSlug() {
     this.slug!.setValue('');
   }
 
-  
+
   /*
   *  @dev
   */
@@ -360,7 +360,7 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
     let adminList: string[] = [];
     let stakingPages: any = {};
 
-    const verifiedPagesDict: Record<string,boolean> = {};
+    const verifiedPagesDict: Record<string, boolean> = {};
     return this._arwikiPages.getApprovedPages(_langCode, -1)
       .pipe(
         switchMap((approvedPages) => {
@@ -384,14 +384,14 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
       throw Error('EmojiMenu not available');
     }
     const positionStrategy = this._overlay.position().flexibleConnectedTo(emojiMenu).withPositions([
-       {
-         originX: 'end',
-         originY: 'top',
-         overlayX: 'center',
-         overlayY: 'top',
-         offsetY: 32
-       }
-     ]);
+      {
+        originX: 'end',
+        originY: 'top',
+        overlayX: 'center',
+        overlayY: 'top',
+        offsetY: 32
+      }
+    ]);
 
     this.overlayRef = this._overlay.create({
       hasBackdrop: true,
@@ -414,7 +414,7 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
     this.overlayRef!.backdropClick().subscribe(() => {
       this.closeEmojiMenu();
     });
-    
+
   }
 
   closeEmojiMenu() {
@@ -432,7 +432,7 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
             toolbar: [
               "bold", "italic", "heading", "|",
               "quote", "unordered-list", "ordered-list", "strikethrough", "code", "|",
-              "link", "image", 
+              "link", "image",
               {
                 name: "emojis",
                 action: (editor) => {
@@ -442,7 +442,7 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
                 title: "Add emoji",
               },
               "|",
-              "preview", "side-by-side", "fullscreen",  "|", 
+              "preview", "side-by-side", "fullscreen", "|",
               "guide"
             ],
           });
@@ -462,7 +462,7 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   fileManager(type: string) {
     const defLang = this._userSettings.getDefaultLang();
-    let direction: Direction = defLang.writing_system === 'LTR' ? 
+    let direction: Direction = defLang.writing_system === 'LTR' ?
       'ltr' : 'rtl';
 
     const dialogRef = this._dialog.open(
@@ -480,7 +480,7 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     // Manually restore focus to the menu trigger
-    dialogRef.afterClosed().subscribe((res: {id: string, type:'text'|'image'|'audio'|'video'|''}) => { 
+    dialogRef.afterClosed().subscribe((res: { id: string, type: 'text' | 'image' | 'audio' | 'video' | '' }) => {
       if (res) {
         this.setPreviewImage(res.id);
       }
@@ -489,7 +489,7 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   uploadFile(type: string) {
     const defLang = this._userSettings.getDefaultLang();
-    let direction: Direction = defLang.writing_system === 'LTR' ? 
+    let direction: Direction = defLang.writing_system === 'LTR' ?
       'ltr' : 'rtl';
 
     const dialogRef = this._dialog.open(
@@ -508,7 +508,7 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
     );
 
     // Manually restore focus to the menu trigger
-    dialogRef.afterClosed().subscribe((res: { id: string, type: 'text'|'image'|'audio'|'video'|'' }|null|undefined) => {
+    dialogRef.afterClosed().subscribe((res: { id: string, type: 'text' | 'image' | 'audio' | 'video' | '' } | null | undefined) => {
       if (res) {
         this.setPreviewImage(res.id);
       }
@@ -522,7 +522,7 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
     const jwk = this._auth.getPrivateKey();
     const data = _newPage.rawContent;
     const loginMethod = this._auth.loginMethod;
-    const tags: {name: string, value: string}[] = [
+    const tags: { name: string, value: string }[] = [
       { name: 'Service', value: 'ArWiki' },
       { name: 'Arwiki-Type', value: 'Page' },
       { name: 'Arwiki-Page-Slug', value: _newPage.slug },

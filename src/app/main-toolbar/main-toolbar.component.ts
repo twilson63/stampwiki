@@ -1,5 +1,5 @@
-import { 
-  Component, OnInit, OnDestroy, 
+import {
+  Component, OnInit, OnDestroy,
   Input, Output, EventEmitter
 } from '@angular/core';
 import { UserSettingsService } from '../core/user-settings.service';
@@ -8,12 +8,12 @@ import { ArweaveService } from '../core/arweave.service';
 import { Subscription, EMPTY, Observable } from 'rxjs';
 import { UtilsService } from '../core/utils.service';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { BottomSheetLoginComponent } from '../shared/bottom-sheet-login/bottom-sheet-login.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { 
-  DialogSelectLanguageComponent 
+import {
+  DialogSelectLanguageComponent
 } from '../shared/dialog-select-language/dialog-select-language.component';
 import { ArwikiLang } from '../core/interfaces/arwiki-lang';
 import { Direction } from '@angular/cdk/bidi';
@@ -37,14 +37,14 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
   loading = this._userSettings.mainToolbarLoadingStream;
   routerLang: string = '';
   defaultTheme: string = '';
-  appName: string = 'Arweave';
+  appName: string = 'STAMP Protocol';
   maintoolbarVisible: boolean = false;
   frmSearch: UntypedFormGroup = new UntypedFormGroup({
     'searchQry': new UntypedFormControl('', [Validators.required])
   });
   profileImage: string = 'assets/img/blank-profile.png';
   profileSubscription = Subscription.EMPTY;
-  profile: UserProfile|null = null;
+  profile: UserProfile | null = null;
   adminsSubscription = Subscription.EMPTY;
 
   constructor(
@@ -57,7 +57,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _dialog: MatDialog,
     private _arwikiAdmins: ArwikiAdminsService
-  ) {}
+  ) { }
 
   get searchQry() {
     return this.frmSearch.get('searchQry');
@@ -106,7 +106,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
   updateProfileData() {
     const mainAddress = this._auth.getMainAddressSnapshot();
     this.account = mainAddress;
-        this.method = this._auth.loginMethod;
+    this.method = this._auth.loginMethod;
     this.profileSubscription = this._auth.getProfile(mainAddress).subscribe((profile) => {
       if (profile) {
         this.profile = profile;
@@ -172,9 +172,9 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
   */
   login() {
     const defLang = this._userSettings.getDefaultLang();
-    let direction: Direction = defLang.writing_system === 'LTR' ? 
+    let direction: Direction = defLang.writing_system === 'LTR' ?
       'ltr' : 'rtl';
-    
+
     this._bottomSheet.open(BottomSheetLoginComponent, {
       direction: direction
     });
@@ -211,9 +211,9 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
 
   openLangModal() {
     const defLang = this._userSettings.getDefaultLang();
-    let direction: Direction = defLang.writing_system === 'LTR' ? 
+    let direction: Direction = defLang.writing_system === 'LTR' ?
       'ltr' : 'rtl';
-    
+
     const dialogRef = this._dialog.open(DialogSelectLanguageComponent, {
       width: '650px',
       data: {},
@@ -231,7 +231,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
     return this._utils.ellipsis(s);
   }
 
-  validateIfUserIsModerator(address:string) {
+  validateIfUserIsModerator(address: string) {
     this.adminsSubscription = this._arwikiAdmins.isAdmin(
       address
     ).subscribe({
@@ -242,6 +242,6 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
         this._utils.message(error, 'error');
       }
     })
-    
+
   }
 }
