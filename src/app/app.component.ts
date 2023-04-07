@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef  } from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { UserSettingsService } from './core/user-settings.service';
 import { MatSidenavContainer } from '@angular/material/sidenav';
 import { map, Subscription, switchMap, of } from 'rxjs';
@@ -15,8 +15,8 @@ import { JWKInterface } from 'arweave/web/lib/wallet';
 // import * as b64 from 'base64-js';
 import { AuthService } from './auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { 
-  DialogConfirmComponent 
+import {
+  DialogConfirmComponent
 } from './shared/dialog-confirm/dialog-confirm.component';
 import { UtilsService } from './core/utils.service';
 declare const window: any;
@@ -26,16 +26,16 @@ declare const window: any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewInit, OnDestroy  {
-	opened: boolean = false;
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+  opened: boolean = false;
   quoteNumber: number = 0;
   @ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;
-  mainToolbarLoading: boolean =  true;
+  mainToolbarLoading: boolean = true;
   mainToolbarIsVisible: boolean = false;
   defaultTheme: string = '';
-  appLogoLight: string = './assets/img/arweave-dark.png';
-  appLogoDark: string = './assets/img/arweave-light.png';
-  mainLogo: string = '';
+  appLogoLight: string = './assets/img/stamp-logo.png';
+  appLogoDark: string = './assets/img/stamp-logo.png';
+  mainLogo: string = './assets/img/stamp-logo.png';
   loginSubscription: Subscription = Subscription.EMPTY;
   loadAccountSubscription: Subscription = Subscription.EMPTY;
   getTranslationsSubscription = Subscription.EMPTY;
@@ -56,14 +56,14 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy  {
     this.quoteNumber = this.getRandomInt(3);
   }
 
-  
+
   ngAfterViewInit() {
     this.sidenavContainer.scrollable.elementScrolled().subscribe((ev) => {
       const target: any = ev.target;
       const scroll: number = target.scrollTop;
       this._userSettings.updateScrollTop(scroll);
     });
-    
+
   }
 
   ngOnInit() {
@@ -85,7 +85,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy  {
               dialogMsgG = dialogMsg;
               return this._translate.get('RESUME_SESSION_DIALOG.TITLE');
             }),
-            switchMap((dialogTitle: string)=> {
+            switchMap((dialogTitle: string) => {
               dialogTitleG = dialogTitle;
               return of('');
             })
@@ -101,12 +101,12 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy  {
             }
           })
 
-          
+
         }
         // DEPRECATED
         // else if (error == 'Error: LaunchPasswordModal') {
-          // Launch password modal
-          // this.passwordDialog();
+        // Launch password modal
+        // this.passwordDialog();
         // }
         else {
           this._utils.message(error, 'error');
@@ -140,7 +140,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy  {
     console.log('%cPlease let us know if you find some interesting bug 😄', 'font-weight: bold;');
     console.log('%cJoin us in our Discord Channel: https://discord.gg/mn8j66r4x3', '');
     console.log('%cFollow us on Twitter: https://twitter.com/TheArWiki', '');
-  
+
   }
 
   getDefaultTheme() {
@@ -190,7 +190,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy  {
           null,
           stayLoggedIn
         ).subscribe({
-          next: (address: string|AddressKey) => {
+          next: (address: string | AddressKey) => {
             this._utils.message('Welcome!', 'success');
           },
           error: (error) => {
@@ -252,8 +252,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy  {
   }
   */
 
-  
 
 
-    
+
+
 }

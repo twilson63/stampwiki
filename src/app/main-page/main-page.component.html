@@ -1,45 +1,36 @@
 <div class="mt-main">
 </div>
-<mat-progress-bar color="accent" class="sticky-progress-bar" mode="indeterminate" *ngIf="loadingSubmenu"></mat-progress-bar>
+<mat-progress-bar color="accent" class="sticky-progress-bar" mode="indeterminate"
+	*ngIf="loadingSubmenu"></mat-progress-bar>
 <div class="mt-main-pgbsep" *ngIf="!loadingSubmenu">
 </div>
 <div class="container main-page-container fadeIn">
 	<div class="row">
 		<div class="col-12 col-md-7 text-center">
 			<div *ngIf="loadingMainPageTX" class="fadeIn loadingMsg">
-				<img
-          class="main-logo animate__animated animate__flipInY"
-          [src]="mainLogo">
+				<img class="main-logo animate__animated animate__flipInY" [src]="mainLogo">
 				<h3 class="text-left animate__animated animate__pulse animate__infinite">
 					{{ 'LOADING.LOADING_LABEL' | translate }}
 				</h3>
 			</div>
 			<!-- Display Main Page TX content -->
 			<div *ngIf="!loadingMainPageTX && mainPage" class="fadeIn">
-				<img
-          class="main-logo"
-          [src]="mainLogo">
+				<img class="main-logo" [src]="mainLogo">
 				<h1 class="text-left main-title fadeIn">
 					{{ mainPage.title }}
 				</h1>
-				<div 
-					*ngIf="mainPage.rawContent" 
-					class="text-justify secondary-mainPTX-content fadeIn"
+				<div *ngIf="mainPage.rawContent" class="text-justify secondary-mainPTX-content fadeIn"
 					[innerHTML]="markdownToHTML(mainPage.rawContent)"></div>
 
 			</div>
 			<!-- Default if not Main Page is found -->
 			<div *ngIf="!loadingMainPageTX && !mainPage" class="fadeIn">
-				<img
-          class="main-logo"
-          [src]="mainLogo">
-				
+				<img class="main-logo" [src]="mainLogo">
+
 				<h1 *ngIf="!loadingMainPageTX" class="text-left main-title fadeIn">
 					{{ 'MAIN_PAGE.TITLE_L1' | translate }}
 				</h1>
-				<p 
-					*ngIf="!loadingMainPageTX " 
-					class="text-left secondary-title fadeIn">
+				<p *ngIf="!loadingMainPageTX " class="text-left secondary-title fadeIn">
 					{{ 'MAIN_PAGE.SUBTITLE_L1' | translate }}
 				</p>
 			</div>
@@ -52,22 +43,15 @@
 			</h2>
 			<div class="row" *ngIf="loadingSubmenu">
 				<div class="col-12 fadeIn portalBtnContainer" *ngFor="let i of [1, 2, 3, 4]">
-					<ngx-skeleton-loader
-										 count="1"
-										 [animation]="getSkeletonLoaderAnimationType()"
-										 [theme]="getSkeletonLoaderThemeNgStyle()"></ngx-skeleton-loader>
+					<ngx-skeleton-loader count="1" [animation]="getSkeletonLoaderAnimationType()"
+						[theme]="getSkeletonLoaderThemeNgStyle()"></ngx-skeleton-loader>
 				</div>
 			</div>
 			<mat-nav-list *ngIf="!loadingSubmenu">
-				<mat-accordion 
-			    id="arwiki-home-page-accordion"
-			    displayMode="flat">
-			    <app-sub-menu-mainpage
-			      [categories]="categories"
-			      [routerLang]="routeLang"
-			      [menu]="menu"
-			      [level]="0"></app-sub-menu-mainpage>
-			  </mat-accordion>
+				<mat-accordion id="arwiki-home-page-accordion" displayMode="flat">
+					<app-sub-menu-mainpage [categories]="categories" [routerLang]="routeLang" [menu]="menu"
+						[level]="0"></app-sub-menu-mainpage>
+				</mat-accordion>
 			</mat-nav-list>
 
 		</div>
@@ -84,19 +68,11 @@
 	</div>
 	<div class="row" *ngIf="!loadingLatestArticles">
 		<div class="col-12 col-md-6" *ngFor="let article of latestArticles">
-			<app-article-card 
-				[article]="article" 
-				[routeLang]="routeLang" 
-				[defaultTheme]="defaultTheme"
+			<app-article-card [article]="article" [routeLang]="routeLang" [defaultTheme]="defaultTheme"
 				[baseURL]="baseURL"></app-article-card>
 		</div>
-		<div
-			class="col-12 text-center"
-			*ngIf="!hideBtnMoreArticles">
-			<button
-				mat-flat-button 
-				class="btn-more-articles"
-				[disabled]="loadingNextLatestArticles"
+		<div class="col-12 text-center" *ngIf="!hideBtnMoreArticles">
+			<button mat-flat-button class="btn-more-articles" [disabled]="loadingNextLatestArticles"
 				(click)="nextLatestArticles(incrementNumLatestArticles)">
 				{{ 'GENERAL.BUTTONS.MORE_ARTICLES' | translate }}
 			</button>
@@ -106,23 +82,19 @@
 		<div class="col-12 col-md-6" *ngFor="let article of [1, 2, 3, 4]">
 			<mat-card class="card-latest-article-skeleton fadeIn">
 				<p>
-					<ngx-skeleton-loader
-											count="1"
-											[animation]="getSkeletonLoaderAnimationType()"
-											[theme]="getSkeletonLoaderThemeNgStyleTitleArticle()"></ngx-skeleton-loader>
+					<ngx-skeleton-loader count="1" [animation]="getSkeletonLoaderAnimationType()"
+						[theme]="getSkeletonLoaderThemeNgStyleTitleArticle()"></ngx-skeleton-loader>
 				</p>
 				<p>
-					<ngx-skeleton-loader
-											count="3"
-											[animation]="getSkeletonLoaderAnimationType()"
-											[theme]="getSkeletonLoaderThemeNgStylePLine()"></ngx-skeleton-loader>
+					<ngx-skeleton-loader count="3" [animation]="getSkeletonLoaderAnimationType()"
+						[theme]="getSkeletonLoaderThemeNgStylePLine()"></ngx-skeleton-loader>
 				</p>
 			</mat-card>
 		</div>
 	</div>
 </div>
 
-<div class="fadeIn container-partners" [class.dark]="this.defaultTheme === 'arwiki-dark'">
+<!-- <div class="fadeIn container-partners" [class.dark]="this.defaultTheme === 'arwiki-dark'">
 	<h2 class="text-center">{{ 'FOOTER.LBL_PARTNERS' | translate }}</h2>
 	<div class="container">
 		<div class="row justify-content-center">
@@ -137,4 +109,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->

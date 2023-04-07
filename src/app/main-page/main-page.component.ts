@@ -25,13 +25,13 @@ import { ArwikiPagesService } from '../core/arwiki-contracts/arwiki-pages.servic
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent implements OnInit, OnDestroy {
-	categories: ArwikiCategoryIndex = {};
-	categoriesSubscription: Subscription = Subscription.EMPTY;
-	defaultTheme: string = '';
-	loadingSubmenu: boolean = false;
-  appName: string = 'Arweave';
-  appLogoLight: string = './assets/img/arweave-dark.png';
-  appLogoDark: string = './assets/img/arweave-light.png';
+  categories: ArwikiCategoryIndex = {};
+  categoriesSubscription: Subscription = Subscription.EMPTY;
+  defaultTheme: string = '';
+  loadingSubmenu: boolean = false;
+  appName: string = 'STAMP Protocol';
+  appLogoLight: string = './assets/img/stamp-logo.png';
+  appLogoDark: string = './assets/img/stamp-logo.png';
   loadingLatestArticles: boolean = false;
   latestArticles: ArwikiPage[] = [];
   allLatestArticles: string[] = [];
@@ -40,23 +40,23 @@ export class MainPageComponent implements OnInit, OnDestroy {
   routeLang: string = '';
   baseURL = this._arweave.baseURL;
   pagesByCategory: Record<string, ArwikiPage[]> = {};
-  mainPage: ArwikiPage|null = null;
+  mainPage: ArwikiPage | null = null;
   mainPageSubscription: Subscription = Subscription.EMPTY;
   loadingMainPageTX: boolean = false;
-  mainLogo: string = '';
+  mainLogo: string = './assets/img/stamp-logo.png';
   partners: any[] = [
-    { img: './assets/img/partners/arweaveAppBalancedHGrayF.png', alt: 'Arweave.app', href:'https://arweave.app' },
-    { img: './assets/img/partners/arconnectGray2.png', alt: 'ArConnect', href:'https://arconnect.io' },
-    { img: './assets/img/partners/warpGray.png', alt: 'Warp Contracts', href:'https://warp.cc' },
-    { img: './assets/img/partners/arIOGray.png', alt: 'Ar.io', href:'https://ar.io' },
-    { img: './assets/img/partners/permaDAOGray.png', alt: 'PermaDAO', href:'https://permadao.com' },
-    { img: './assets/img/partners/spheronGray.png', alt: 'Spheron', href:'https://spheron.network' },
-    { img: './assets/img/partners/communityLogoGray.png', alt: 'Community.XYZ', href:'https://community.xyz' },
+    // { img: './assets/img/partners/arweaveAppBalancedHGrayF.png', alt: 'Arweave.app', href: 'https://arweave.app' },
+    // { img: './assets/img/partners/arconnectGray2.png', alt: 'ArConnect', href: 'https://arconnect.io' },
+    // { img: './assets/img/partners/warpGray.png', alt: 'Warp Contracts', href: 'https://warp.cc' },
+    // { img: './assets/img/partners/arIOGray.png', alt: 'Ar.io', href: 'https://ar.io' },
+    // { img: './assets/img/partners/permaDAOGray.png', alt: 'PermaDAO', href: 'https://permadao.com' },
+    // { img: './assets/img/partners/spheronGray.png', alt: 'Spheron', href: 'https://spheron.network' },
+    // { img: './assets/img/partners/communityLogoGray.png', alt: 'Community.XYZ', href: 'https://community.xyz' },
 
-    { img: './assets/img/partners/pn-1kx.png', alt: '1kx', href:'' },
-    { img: './assets/img/partners/pn-a16z.png', alt: 'a16z', href:'' },
-    { img: './assets/img/partners/pn-usv.png', alt: 'USV', href:'' },
-    { img: './assets/img/partners/pn-coinbase.png', alt: 'Coinbase', href:'' },
+    // { img: './assets/img/partners/pn-1kx.png', alt: '1kx', href: '' },
+    // { img: './assets/img/partners/pn-a16z.png', alt: 'a16z', href: '' },
+    // { img: './assets/img/partners/pn-usv.png', alt: 'USV', href: '' },
+    // { img: './assets/img/partners/pn-coinbase.png', alt: 'Coinbase', href: '' },
   ];
   numLatestArticles = 4;
   incrementNumLatestArticles = 4;
@@ -99,33 +99,33 @@ export class MainPageComponent implements OnInit, OnDestroy {
     // Get main page tx
     this.mainPageSubscription = this._arwikiPages.getApprovedPages(
       this.routeLang, -1).pipe(
-      switchMap((approvedPages: ArwikiPageIndex) => {
-        let mainTX = '';
-        const pages: ArwikiPage[] = Object.values(approvedPages);
-        const mainPage: ArwikiPage|undefined = pages.find((p: ArwikiPage) => {
-          return p.showInMainPage;
-        });
-        if (mainPage) {
-          this.mainPage = mainPage;
-          mainTX = this.mainPage.id;
-        } else {
-          this.mainPage = null;
-          throw Error('mainPage not defined');
-        }
+        switchMap((approvedPages: ArwikiPageIndex) => {
+          let mainTX = '';
+          const pages: ArwikiPage[] = Object.values(approvedPages);
+          const mainPage: ArwikiPage | undefined = pages.find((p: ArwikiPage) => {
+            return p.showInMainPage;
+          });
+          if (mainPage) {
+            this.mainPage = mainPage;
+            mainTX = this.mainPage.id;
+          } else {
+            this.mainPage = null;
+            throw Error('mainPage not defined');
+          }
 
-        return this.arwikiQuery.getTXsData([mainTX]);
-      })
-    ).subscribe({
-        next: async (txs: ArdbTransaction[]|ArdbBlock[]) => {
+          return this.arwikiQuery.getTXsData([mainTX]);
+        })
+      ).subscribe({
+        next: async (txs: ArdbTransaction[] | ArdbBlock[]) => {
           for (let p of txs) {
             const pTX: ArdbTransaction = new ArdbTransaction(p, this._arweave.arweave);
-            
+
             const title = this.arwikiQuery.searchKeyNameInTags(pTX.tags, 'Arwiki-Page-Title');
             const img = this.arwikiQuery.searchKeyNameInTags(pTX.tags, 'Arwiki-Page-Img');
             const id = pTX.id;
             const block = pTX.block;
             const language = this.routeLang;
-           
+
             this.mainPage!.title = title;
             this.mainPage!.img = img;
             this.mainPage!.block = block;
@@ -139,7 +139,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
         error: (error: string) => {
           this.loadingMainPageTX = false;
           console.error(`Error MainPage: ${error}`);
-         
+
         },
       })
   }
@@ -151,7 +151,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
     // Get default theme
     this.getDefaultTheme();
     // Load data
-  	this.loadMainPageData();
+    this.loadMainPageData();
 
     // ON route change
     this._userSettings.routeLangStream.subscribe(async (data) => {
@@ -159,16 +159,16 @@ export class MainPageComponent implements OnInit, OnDestroy {
         this.routeLang = data;
         if (this.routeLang) {
           this.loadMainPageData();
-        }  
+        }
       }
-      
+
     });
   }
 
   /*
   *  @dev return an observable with the latest articles
   */
-  getLatestArticles(numArticles: number) {    
+  getLatestArticles(numArticles: number) {
     this.loadingLatestArticles = true;
     this.latestArticles = [];
     this.allLatestArticles = [];
@@ -195,7 +195,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
         return this.arwikiQuery.getTXsData(verifiedPages);
       }),
-      switchMap((pages: ArdbTransaction[]|ArdbBlock[]) => {
+      switchMap((pages: ArdbTransaction[] | ArdbBlock[]) => {
         const latestPages: ArwikiPage[] = [];
         for (let p of pages) {
           const pTX: ArdbTransaction = new ArdbTransaction(p, this._arweave.arweave);
@@ -213,7 +213,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
           const category = this.allApprovedPages[slug].category;
 
           const sponsor = this.allApprovedPages[slug].sponsor;
-          
+
           latestPages.push({
             title: title,
             slug: slug,
@@ -236,7 +236,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: async (pages: ArwikiPage[]) => {
         this.latestArticles = pages;
-        
+
         this.loadingLatestArticles = false;
       },
       error: (error) => {
@@ -247,30 +247,30 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-		this.categoriesSubscription.unsubscribe();
+    this.categoriesSubscription.unsubscribe();
     this.mainPageSubscription.unsubscribe();
     this.pagesSubscription.unsubscribe();
     this.nextLatestArticlesSubscription.unsubscribe();
   }
 
   getSkeletonLoaderAnimationType() {
-  	let type = 'progress';
-  	if (this.defaultTheme === 'arwiki-dark') {
-  		type = 'progress-dark';
-  	}
-  	return type;
+    let type = 'progress';
+    if (this.defaultTheme === 'arwiki-dark') {
+      type = 'progress-dark';
+    }
+    return type;
   }
 
   getSkeletonLoaderThemeNgStyle(width: string = '100%') {
-  	let ngStyle: any = {
-  		'height.px': '30',
-  		'width': width
-  	};
-  	if (this.defaultTheme === 'arwiki-dark') {
-  		ngStyle['background-color'] = '#3d3d3d';
-  	}
+    let ngStyle: any = {
+      'height.px': '30',
+      'width': width
+    };
+    if (this.defaultTheme === 'arwiki-dark') {
+      ngStyle['background-color'] = '#3d3d3d';
+    }
 
-  	return ngStyle;
+    return ngStyle;
   }
 
   getSkeletonLoaderThemeNgStyle2() {
@@ -309,7 +309,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
       ngStyle['background-color'] = '#3d3d3d';
     }
 
-    return ngStyle;    
+    return ngStyle;
   }
 
   /*
@@ -331,9 +331,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
 
   getMainLogo() {
-    if ((this.defaultTheme === 'arwiki-light' || 
-      this.defaultTheme === 'arwiki-orange' || 
-      this.defaultTheme === 'arwiki-yellow' || 
+    if ((this.defaultTheme === 'arwiki-light' ||
+      this.defaultTheme === 'arwiki-orange' ||
+      this.defaultTheme === 'arwiki-yellow' ||
       this.defaultTheme === 'arwiki-peach') && this.appLogoLight) {
       return this.appLogoLight;
     } else if (this.defaultTheme === 'arwiki-dark' && this.appLogoDark) {
@@ -368,7 +368,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
     }
 
     this.nextLatestArticlesSubscription = this.arwikiQuery.getTXsData(verifiedPages).pipe(
-      switchMap((pages: ArdbTransaction[]|ArdbBlock[]) => {
+      switchMap((pages: ArdbTransaction[] | ArdbBlock[]) => {
         const latestPages: ArwikiPage[] = [];
         for (let p of pages) {
           const pTX: ArdbTransaction = new ArdbTransaction(p, this._arweave.arweave);
@@ -387,7 +387,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
           const category = this.allApprovedPages[slug].category;
 
           const sponsor = this.allApprovedPages[slug].sponsor;
-          
+
           latestPages.push({
             title: title,
             slug: slug,
@@ -410,7 +410,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
       next: async (pages: ArwikiPage[]) => {
         // Sort desc
         this.latestArticles.push(...pages);
-        
+
         this.loadingNextLatestArticles = false;
       },
       error: (error) => {
@@ -431,10 +431,10 @@ export class MainPageComponent implements OnInit, OnDestroy {
         this.categories = data.categories;
 
         const pages = data.catPages;
-        
+
         this.menu = this._arwikiMenu.generateMenu(
-          {...this.categories},
-          {...pages}
+          { ...this.categories },
+          { ...pages }
         );
 
       },

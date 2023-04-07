@@ -1,26 +1,12 @@
 {
 	"HOME": {
-		"SECONDARY_TITLE": "Welcome to the permaweb!"
+		"SECONDARY_TITLE": "Welcome to the STAMP Protocol Wiki!"
 	},
 	"MAIN_MENU": {
 		"HOME": "Home",
 		"ABOUT": "About",
-		"the_arweave_project": "The Arweave Project",
-		"the_arweave_protocol": "The Arweave Protocol",
-		"profit_sharing": "Profit Sharing",
-		"mining": "Mining",
-		"building_on_arweave": "Building on Arweave",
-		"resources": "Resources",
-		"users": "Users",
-		"wallets": "Wallets",
-		"builders": "Builders",
-		"devtools": "DevTools",
-		"8pin_tutorial": "8Pin Tutorial",
-		"creating_a_dapp": "Creating a dApp",
-		"arweave_protocol": "Arweave protocol",
-		"mining_mechanism": "Mining Mechanism",
-		"packages_and_apis": "Packages & APIs",
-		"builders_tutorials": "Tutorials"
+		"the_stamp_project": "The STAMP Project",
+		"the_stamp_protocol": "The STAMP Protocol"
 	},
 	"MAIN_TOOLBAR": {
 		"TOOLTIP_LOGIN": "Login",
@@ -53,8 +39,8 @@
 		"MENU_MODERATOR_PAGES": "Manage pages"
 	},
 	"MAIN_PAGE": {
-		"TITLE_L1": "Welcome to the permaweb!",
-		"SUBTITLE_L1": "arwiki is the decentralized wiki for arweave that anyone can edit.",
+		"TITLE_L1": "👋🏻 STAMP Protocol!",
+		"SUBTITLE_L1": "STAMP is the \"like\" protocol for the permaweb",
 		"TITLE_L2": "Getting started",
 		"TITLE_L3": "Latest articles",
 		"LABEL_NO_RESULTS": "No results."
@@ -88,9 +74,7 @@
 		"LABEL_READING_TIME": "Reading Time:",
 		"LABEL_READING_TIME_RES_COMPOSED": "{{ minutes }}' {{ seconds }}\""
 	},
-	"NOT_FOUND": {
-
-	},
+	"NOT_FOUND": {},
 	"CREATE_PAGE": {
 		"TITLE": "Create page",
 		"FRM_TITLE": "Title",
@@ -108,7 +92,7 @@
 		"INPUT_SEARCH_LABEL": "Search the arwiki",
 		"INPUT_SEARCH_PLACEHOLDER": "",
 		"LBL_DEFAULT_LANG": "Default language",
-		"LBL_SELECT_LANG":" Select language",
+		"LBL_SELECT_LANG": " Select language",
 		"BTN_TXT_GO": "Go!"
 	},
 	"FOOTER": {
@@ -185,7 +169,7 @@
 		}
 	},
 	"LOADING": {
-		"QUOTES_TITLE" : "Did you know?",
+		"QUOTES_TITLE": "Did you know?",
 		"QUOTES": {
 			"0": "Arweave is a protocol that allows you to store data permanently, sustainably, with a single upfront fee.",
 			"1": "On top of the core Arweave protocol lives the permaweb: A global, permanent web of pages and applications that live forever.",

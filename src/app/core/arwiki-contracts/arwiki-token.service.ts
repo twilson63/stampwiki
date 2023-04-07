@@ -9,11 +9,10 @@ import { UtilsService } from '../utils.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ArwikiTokenContract
-{
+export class ArwikiTokenContract {
   // Old Contract (ArWiki v1)
   // private _contractAddress: string = 'ewepANKEVffP0cm_XKjwTYhSBqaiQrJbVrCcBiWqw-s';
-  
+
   // New contract demo (ArWiki v2)
   // Single level
   // private _contractAddress = 'JGrP0IV4aVOAx1lgozOjQhZkUVv8-y1xfUcCR9ra8QQ';
@@ -21,18 +20,20 @@ export class ArwikiTokenContract
 
   // One holder
   // private _contractAddress = '2nZIuLR0g9EqhDm7M-5Si0QeJfhL07oYLlkrHTVvHQE';
-  private _contractAddress = 'FBF6LiAtREEaGu5ejKbEdRZcUn16yqQeVIwcjgysWTc';
+  // private _contractAddress = 'FBF6LiAtREEaGu5ejKbEdRZcUn16yqQeVIwcjgysWTc';
+  // private _contractAddress = '1VjJfXCKHuctK221iK8TKza66N3SnBKvWgZvfxqojjw';
+  private _contractAddress = 'BrHnk32WJ3SJAMafvKgUjpliZjeIibHHSN6HFAkP21o';
 
   // Multi level
   // private _contractAddress = 'aYnwKbqL603IKdP-Ba_kG73K7EeURTeF1jUoz4YJqxA';
 
   private _state: any = {};
 
-	get contractAddress() {
-		return this._contractAddress;
-	}
+  get contractAddress() {
+    return this._contractAddress;
+  }
 
-	constructor(
+  constructor(
     private _arweave: ArweaveService,
     private _warp: WarpContractsService,
     private _utils: UtilsService
@@ -82,20 +83,20 @@ export class ArwikiTokenContract
     return this._utils.cloneObject(this._state);
   }
 
-	/*
-	*	@dev Execute read function on PST contract
-	*/
-	getBalance(address: string, reload: boolean = false): Observable<any> {
-		return this.getState(reload).pipe(
-			map((_state: any) => {
-				const balances = _state.balances;
-				const vault = _state.vault;
-				const stakes = _state.stakes;
-				const balance = this.getBalanceDetail(address, balances, vault, stakes);
-				return balance.result;
-			})
-		);
-	}
+  /*
+  *	@dev Execute read function on PST contract
+  */
+  getBalance(address: string, reload: boolean = false): Observable<any> {
+    return this.getState(reload).pipe(
+      map((_state: any) => {
+        const balances = _state.balances;
+        const vault = _state.vault;
+        const stakes = _state.stakes;
+        const balance = this.getBalanceDetail(address, balances, vault, stakes);
+        return balance.result;
+      })
+    );
+  }
 
   /*
   *  @dev Execute read function on PST contract
@@ -157,19 +158,19 @@ export class ArwikiTokenContract
 
 
   /*
-	*	@dev Get the settings property from full state contract
-	*/
-	getSettings(reload = false): Observable<any> {
-		return this.getState(reload).pipe(
-			map((_state: any) => {
+  *	@dev Get the settings property from full state contract
+  */
+  getSettings(reload = false): Observable<any> {
+    return this.getState(reload).pipe(
+      map((_state: any) => {
         const settings_obj = this._utils.cloneObject(_state.settings);
-				const settings = new Map(settings_obj);
-				return settings;
-			})
-		);
-	}
+        const settings = new Map(settings_obj);
+        return settings;
+      })
+    );
+  }
 
-	getBalanceDetail(_target: string, _balances: any, _vault: any, _stakes: any) {
+  getBalanceDetail(_target: string, _balances: any, _vault: any, _stakes: any) {
     const target = _target;
     const balances = _balances;
     const vault = _vault;
@@ -192,9 +193,9 @@ export class ArwikiTokenContract
         stakingBalance += stakes[target][vLang][vSlug];
       }
     }
-    return {result: {target, unlockedBalance, vaultBalance, stakingBalance}};
+    return { result: { target, unlockedBalance, vaultBalance, stakingBalance } };
   }
-  
+
   /*
   * @dev Transfer wiki tokens
   */
@@ -206,16 +207,16 @@ export class ArwikiTokenContract
   ) {
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'TransferTokens'},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'ArWiki' },
+      { name: 'Arwiki-Type', value: 'TransferTokens' },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'transfer',
       target: _target,
       qty: _amount,
     };
-    
+
     return this._warp.writeInteraction(
       this._contractAddress, jwk, input, tags
     );
@@ -225,7 +226,7 @@ export class ArwikiTokenContract
   /*
   *  @dev Get all balances variables
   */
-  getAllBalances(_reload=false): Observable<any> {
+  getAllBalances(_reload = false): Observable<any> {
     return this.getState(_reload).pipe(
       map((_state: any) => {
         const res = {
@@ -249,16 +250,16 @@ export class ArwikiTokenContract
   ) {
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'LockInVault'},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'ArWiki' },
+      { name: 'Arwiki-Type', value: 'LockInVault' },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'lock',
       lockLength: _lockLength,
       qty: _amount,
     };
-    
+
     return this._warp.writeInteraction(
       this._contractAddress, jwk, input, tags
     );
@@ -273,14 +274,14 @@ export class ArwikiTokenContract
   ) {
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'UnlockVault'},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'ArWiki' },
+      { name: 'Arwiki-Type', value: 'UnlockVault' },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'unlock'
     };
-    
+
     return this._warp.writeInteraction(
       this._contractAddress, jwk, input, tags
     );
@@ -291,7 +292,7 @@ export class ArwikiTokenContract
   *  @dev Get balances
   */
   getBalancesFromLocal(): { balances: any, vault: any, stakes: any } {
-    const state = {...this._utils.cloneObject(this._state)};
+    const state = { ...this._utils.cloneObject(this._state) };
     return { balances: { ...state.balances }, vault: { ...state.vault }, stakes: { ...state.stakes } };
   }
 
