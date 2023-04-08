@@ -20,10 +20,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'arwiki'`, () => {
+  it(`should have as title 'StampWiki'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('arwiki');
+    expect(app.title).toEqual('StampWiki');
   });
 
   it('should render title', () => {

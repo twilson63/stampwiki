@@ -22,8 +22,8 @@ export class ArwikiTokenContract {
   // private _contractAddress = '2nZIuLR0g9EqhDm7M-5Si0QeJfhL07oYLlkrHTVvHQE';
   // private _contractAddress = 'FBF6LiAtREEaGu5ejKbEdRZcUn16yqQeVIwcjgysWTc';
   // private _contractAddress = '1VjJfXCKHuctK221iK8TKza66N3SnBKvWgZvfxqojjw';
-  private _contractAddress = 'VGnXS4_MwUwPA5HvNT6kvon41Hst9E7jqwUaS99VyFQ';
-
+  //private _contractAddress = 'VGnXS4_MwUwPA5HvNT6kvon41Hst9E7jqwUaS99VyFQ';
+  private _contractAddress = 'dGGCAxBqNm_YEh8VX0g1_2sl5yzT25erQg3_TJrKgcE';
   // Multi level
   // private _contractAddress = 'aYnwKbqL603IKdP-Ba_kG73K7EeURTeF1jUoz4YJqxA';
 
@@ -207,7 +207,7 @@ export class ArwikiTokenContract {
   ) {
     const jwk = _privateKey;
     const tags = [
-      { name: 'Service', value: 'ArWiki' },
+      { name: 'Service', value: 'StampWiki' },
       { name: 'Arwiki-Type', value: 'TransferTokens' },
       { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
@@ -250,7 +250,7 @@ export class ArwikiTokenContract {
   ) {
     const jwk = _privateKey;
     const tags = [
-      { name: 'Service', value: 'ArWiki' },
+      { name: 'Service', value: 'StampWiki' },
       { name: 'Arwiki-Type', value: 'LockInVault' },
       { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
@@ -274,7 +274,7 @@ export class ArwikiTokenContract {
   ) {
     const jwk = _privateKey;
     const tags = [
-      { name: 'Service', value: 'ArWiki' },
+      { name: 'Service', value: 'StampWiki' },
       { name: 'Arwiki-Type', value: 'UnlockVault' },
       { name: 'Arwiki-Version', value: _arwikiVersion },
     ];

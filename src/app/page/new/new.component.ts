@@ -523,7 +523,7 @@ export class NewComponent implements OnInit, OnDestroy, AfterViewInit {
     const data = _newPage.rawContent;
     const loginMethod = this._auth.loginMethod;
     const tags: { name: string, value: string }[] = [
-      { name: 'Service', value: 'ArWiki' },
+      { name: 'Service', value: 'StampWiki' },
       { name: 'Arwiki-Type', value: 'Page' },
       { name: 'Arwiki-Page-Slug', value: _newPage.slug },
       { name: 'Arwiki-Page-Category', value: _newPage.category },

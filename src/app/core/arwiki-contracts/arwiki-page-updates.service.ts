@@ -33,14 +33,14 @@ export class ArwikiPageUpdatesService {
   ) {
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'PageUpdateValidation'},
-      {name: 'Arwiki-Page-Id', value: _pageId},
-      {name: 'Arwiki-Page-Slug', value: _slug},
-      {name: 'Arwiki-Page-Category', value: _category},
-      {name: 'Arwiki-Page-Lang', value: _langCode},
-      {name: 'Arwiki-Page-Value', value: `${_pageValue}`},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'StampWiki' },
+      { name: 'Arwiki-Type', value: 'PageUpdateValidation' },
+      { name: 'Arwiki-Page-Id', value: _pageId },
+      { name: 'Arwiki-Page-Slug', value: _slug },
+      { name: 'Arwiki-Page-Category', value: _category },
+      { name: 'Arwiki-Page-Lang', value: _langCode },
+      { name: 'Arwiki-Page-Value', value: `${_pageValue}` },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'addPageUpdate',
@@ -74,7 +74,7 @@ export class ArwikiPageUpdatesService {
       data
     }, jwk);
     tx.addTag('Content-Type', 'text/plain');
-    tx.addTag('Service', 'ArWiki');
+    tx.addTag('Service', 'StampWiki');
     tx.addTag('Arwiki-Type', 'PageUpdateRejected');
     tx.addTag('Arwiki-Page-Id', _pageId);
     tx.addTag('Arwiki-Page-Slug', _slug);

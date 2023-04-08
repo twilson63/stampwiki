@@ -33,10 +33,10 @@ export class ArwikiAdminsService {
   /*
   *  @dev Get only the admin list from full state contract
   */
-  isAdmin(address: string, reload=false): Observable<boolean> {
+  isAdmin(address: string, reload = false): Observable<boolean> {
     return this.getAdminList(reload).pipe(
-      map( (admin_list: string[]) => {
-        return Array.prototype.indexOf.call(admin_list, address) >= 0; 
+      map((admin_list: string[]) => {
+        return Array.prototype.indexOf.call(admin_list, address) >= 0;
       })
     );
   }
@@ -51,9 +51,9 @@ export class ArwikiAdminsService {
   ) {
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'ProposeModerator'},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'StampWiki' },
+      { name: 'Arwiki-Type', value: 'ProposeModerator' },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'propose',

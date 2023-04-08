@@ -26,10 +26,10 @@ export class ArweaveService {
   // Block time: Around 2 minutes
   public readonly blockToSeconds: number = 0.5 / 60;
   arweaveWebWallet = new ArweaveWebWallet({
-    name: 'ArWiki',
+    name: 'StampWiki',
     logo: 'https://arweave.net/wJGdli6nMQKCyCdtCewn84ba9-WsJ80-GS-KtKdkCLg'
   });
-  public readonly appInfo = { name: 'ArWiki', logo: '' };
+  public readonly appInfo = { name: 'StampWiki', logo: '' };
   // Limit: 120kb
   public dataSizeLimitDispatch = 120000;
 
@@ -39,7 +39,7 @@ export class ArweaveService {
       port: this.port,
       protocol: this.protocol,
     });
-    
+
     this.arweaveWebWallet.setUrl('arweave.app');
   }
 
@@ -101,7 +101,7 @@ export class ArweaveService {
           .catch((error: any) => {
             subscriber.error(error);
           })
-        
+
       } // Arweave Web Wallet
       else if (method === 'arweavewebwallet') {
         if (this.arweaveWebWallet.connected) {
@@ -124,10 +124,10 @@ export class ArweaveService {
         }
         subscriber.error('Login method not supported!');
 
-      }else {
+      } else {
         subscriber.error('Wrong login method!');
       }
-      
+
     })
 
     return obs.pipe(
@@ -236,8 +236,8 @@ export class ArweaveService {
   */
   fileToArrayBuffer(file: any): Observable<any> {
     let method = new Observable<any>((subscriber) => {
-    // Transform .json file into key
-    try {
+      // Transform .json file into key
+      try {
         const freader = new FileReader();
         freader.onload = async () => {
           const data = freader.result;
@@ -255,10 +255,10 @@ export class ArweaveService {
 
         freader.readAsArrayBuffer(file);
 
-       } catch (error) {
-         subscriber.error(error);
-       }
-      
+      } catch (error) {
+        subscriber.error(error);
+      }
+
     });
     return method;
   }
@@ -270,10 +270,10 @@ export class ArweaveService {
     fileBin: any,
     contentType: string,
     key: JWKInterface | "use_wallet",
-    tags: {name: string, value: string}[],
+    tags: { name: string, value: string }[],
     loginMethod: string,
     disableDispatch: boolean,
-    externalProgressObj?: {completed: string, uploaded: string, total: string}|undefined|null): Promise<Transaction|{id: string, type: string}> {
+    externalProgressObj?: { completed: string, uploaded: string, total: string } | undefined | null): Promise<Transaction | { id: string, type: string }> {
     // Check if the login method allows dispatch
     if (!disableDispatch) {
       if (loginMethod !== 'arconnect' && loginMethod !== 'arweavewebwallet') {
@@ -283,7 +283,7 @@ export class ArweaveService {
 
     // Create transaction
     let transaction = await this.arweave.createTransaction({
-        data: fileBin,
+      data: fileBin,
     }, key);
 
     transaction.addTag('Content-Type', contentType);
@@ -366,8 +366,8 @@ export class ArweaveService {
   async sendFee(_contractState: any, _fee: string, jwk: any): Promise<any> {
     const holder = this.selectWeightedPstHolder(_contractState.balances);
     // send a fee. You should inform the user about this fee and amount.
-    const tx = await this.arweave.createTransaction({ 
-      target: holder, quantity: this.arweave.ar.arToWinston(_fee) 
+    const tx = await this.arweave.createTransaction({
+      target: holder, quantity: this.arweave.ar.arToWinston(_fee)
     }, jwk)
     await this.arweave.transactions.sign(tx, jwk)
     await this.arweave.transactions.post(tx)
@@ -376,10 +376,10 @@ export class ArweaveService {
 
   async sendDonation(_to: string, _fee: string, jwk: any): Promise<any> {
     // send a fee. You should inform the user about this fee and amount.
-    const tx = await this.arweave.createTransaction({ 
-      target: _to, quantity: this.arweave.ar.arToWinston(_fee) 
+    const tx = await this.arweave.createTransaction({
+      target: _to, quantity: this.arweave.ar.arToWinston(_fee)
     }, jwk)
-    tx.addTag('Service', 'ArWiki');
+    tx.addTag('Service', 'StampWiki');
     tx.addTag('Arwiki-Type', 'Donation');
     tx.addTag('Arwiki-Version', arwikiVersion[0]);
 
@@ -404,7 +404,7 @@ export class ArweaveService {
 
   getDataAsString(txId: string): Observable<string> {
     const url = `${this.baseURL}${txId}`;
-    return this._http.get(url, {observe: 'body', responseType: 'text'});
+    return this._http.get(url, { observe: 'body', responseType: 'text' });
   }
 
   getDataAsStringObs(txId: string): Observable<string> {
@@ -412,16 +412,16 @@ export class ArweaveService {
       catchError((error) => {
         console.error(error);
         console.warn(`Method 2: Fetching ${txId} data ...`, 'warning');
-        return from(this.arweave.transactions.getData(txId, {decode: true, string: true})).pipe(
-            map((res) => {
-              return `${res}`;
-            })
-          );
+        return from(this.arweave.transactions.getData(txId, { decode: true, string: true })).pipe(
+          map((res) => {
+            return `${res}`;
+          })
+        );
       })
     );
   }
 
- 
+
 
   /**
    * Formats a block number into human readable hours, days, months, years.
@@ -436,7 +436,7 @@ export class ArweaveService {
     const month = week * 4;
     const year = month * 12;
     const ops = [
-      ['Y', year], ['M', month], ['W', week], 
+      ['Y', year], ['M', month], ['W', week],
       ['D', day], ['h', hour], ['m', minute],
       ['s', this.blockToSeconds]
     ];
@@ -462,7 +462,7 @@ export class ArweaveService {
       console.warn('Fetching data from gw ...', txId);
       const data = await fetch(`${this.baseURL}${txId}`);
       if (data.ok) {
-          content = await data.text();
+        content = await data.text();
       } else {
         throw Error('Error fetching data!');
       }
@@ -474,8 +474,8 @@ export class ArweaveService {
     if (error) {
       try {
         const tmpContent = await this.arweave.transactions.getData(
-          txId, 
-          {decode: true, string: true}
+          txId,
+          { decode: true, string: true }
         );
         content = tmpContent ? tmpContent.toString() : '';
       } catch (err) {
@@ -490,13 +490,13 @@ export class ArweaveService {
   * @dev Upload a file to the permaweb
   */
   uploadFileToArweave(
-      fileBin: any,
-      contentType: string,
-      key:  JWKInterface | "use_wallet",
-      tags: {name: string, value: string}[],
-      method: string,
-      disableDispatch: boolean,
-      externalProgressObj?: {completed: string, uploaded: string, total: string}|undefined|null): Observable<Transaction | {id: string, type: string}> {
+    fileBin: any,
+    contentType: string,
+    key: JWKInterface | "use_wallet",
+    tags: { name: string, value: string }[],
+    method: string,
+    disableDispatch: boolean,
+    externalProgressObj?: { completed: string, uploaded: string, total: string } | undefined | null): Observable<Transaction | { id: string, type: string }> {
     return from(this._uploadFileToArweave(fileBin, contentType, key, tags, method, disableDispatch, externalProgressObj));
   }
 
@@ -509,45 +509,45 @@ export class ArweaveService {
     return false;
   }
 
-   /**
-   * Given an map of address->balance, select one random address
-   * weighted by the amount of tokens they hold.
-   * Code From smartweave library
-   *
-   * @param balances  A balances object, where the key is address and the value is the number of tokens they hold
-   */
+  /**
+  * Given an map of address->balance, select one random address
+  * weighted by the amount of tokens they hold.
+  * Code From smartweave library
+  *
+  * @param balances  A balances object, where the key is address and the value is the number of tokens they hold
+  */
   selectWeightedPstHolder(balances: Record<string, number>) {
-      // Count the total tokens
-      let totalTokens = 0;
-      for (const address of Object.keys(balances)) {
-          totalTokens += balances[address];
+    // Count the total tokens
+    let totalTokens = 0;
+    for (const address of Object.keys(balances)) {
+      totalTokens += balances[address];
+    }
+    // Create a copy of balances where the amount each holder owns is represented
+    // by a value 0-1.
+    const weighted: Record<string, number> = {};
+    for (const address of Object.keys(balances)) {
+      weighted[address] = balances[address] / totalTokens;
+    }
+    let sum = 0;
+    const r = Math.random();
+    for (const address of Object.keys(weighted)) {
+      sum += weighted[address];
+      if (r <= sum && weighted[address] > 0) {
+        return address;
       }
-      // Create a copy of balances where the amount each holder owns is represented
-      // by a value 0-1.
-      const weighted: Record<string, number> = {};
-      for (const address of Object.keys(balances)) {
-          weighted[address] = balances[address] / totalTokens;
-      }
-      let sum = 0;
-      const r = Math.random();
-      for (const address of Object.keys(weighted)) {
-          sum += weighted[address];
-          if (r <= sum && weighted[address] > 0) {
-              return address;
-          }
-      }
-      throw new Error('Unable to select token holder');
+    }
+    throw new Error('Unable to select token holder');
   }
 
   private async _generateSignedTx(
     fileBin: any,
     contentType: string,
-    key:  JWKInterface | "use_wallet",
-    tags: {name: string, value: string}[] = []
+    key: JWKInterface | "use_wallet",
+    tags: { name: string, value: string }[] = []
   ): Promise<Transaction> {
     // Create transaction
     let transaction = await this.arweave.createTransaction({
-        data: fileBin,
+      data: fileBin,
     }, key);
 
     transaction.addTag('Content-Type', contentType);
@@ -563,8 +563,8 @@ export class ArweaveService {
   public generateSignedTx(
     fileBin: any,
     contentType: string,
-    key:  JWKInterface | "use_wallet",
-    tags: {name: string, value: string}[] = []
+    key: JWKInterface | "use_wallet",
+    tags: { name: string, value: string }[] = []
   ): Observable<Transaction> {
     return from(this._generateSignedTx(fileBin, contentType, key, tags));
   }

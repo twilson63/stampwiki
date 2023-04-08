@@ -23,16 +23,16 @@ export class ArwikiLangsService {
       map((_state: any) => {
         const languages: ArwikiLangIndex = Object
           .keys(_state.languages)
-          .reduce((accum: ArwikiLangIndex, code)=> {
-              if (_state.languages[code].active && onlyActive) {
-                accum[code] = this._utils.cloneObject(_state.languages[code]);
-                accum[code].code = code;
-              } else if (!onlyActive) {
-                accum[code] = this._utils.cloneObject(_state.languages[code]);
-                accum[code].code = code;
-              }
-              return accum;
-            }, {});
+          .reduce((accum: ArwikiLangIndex, code) => {
+            if (_state.languages[code].active && onlyActive) {
+              accum[code] = this._utils.cloneObject(_state.languages[code]);
+              accum[code].code = code;
+            } else if (!onlyActive) {
+              accum[code] = this._utils.cloneObject(_state.languages[code]);
+              accum[code].code = code;
+            }
+            return accum;
+          }, {});
 
         return languages;
       })
@@ -44,14 +44,14 @@ export class ArwikiLangsService {
     _writingSystem: string,
     _nativeName: string,
     _isoName: string,
-    _privateKey: JWKInterface|'use_wallet',
+    _privateKey: JWKInterface | 'use_wallet',
     _arwikiVersion: string
   ) {
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'AddLanguage'},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'StampWiki' },
+      { name: 'Arwiki-Type', value: 'AddLanguage' },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'addLanguage',
@@ -60,7 +60,7 @@ export class ArwikiLangsService {
       isoName: _isoName,
       nativeName: _nativeName
     };
-    
+
     return this._warp.writeInteraction(
       this._arwikiToken.contractAddress, jwk, input, tags
     );
@@ -72,14 +72,14 @@ export class ArwikiLangsService {
     _nativeName: string,
     _isoName: string,
     _active: boolean,
-    _privateKey: JWKInterface|'use_wallet',
+    _privateKey: JWKInterface | 'use_wallet',
     _arwikiVersion: string
   ) {
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'UpdateLanguage'},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'StampWiki' },
+      { name: 'Arwiki-Type', value: 'UpdateLanguage' },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'updateLanguage',
@@ -89,7 +89,7 @@ export class ArwikiLangsService {
       nativeName: _nativeName,
       active: _active
     };
-    
+
     return this._warp.writeInteraction(
       this._arwikiToken.contractAddress, jwk, input, tags
     );
@@ -100,7 +100,7 @@ export class ArwikiLangsService {
   */
   getLanguagesFromLocal(): ArwikiLangIndex {
     const state = this._arwikiToken.getStateFromLocal();
-    return {...state.languages};
+    return { ...state.languages };
   }
 
 

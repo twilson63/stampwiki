@@ -20,7 +20,7 @@ export class ArwikiVotesService {
     _qty: number,
     _lockLength: number,
     _note: string,
-    _privateKey: JWKInterface|'use_wallet',
+    _privateKey: JWKInterface | 'use_wallet',
     _arwikiVersion: string
   ) {
     let type = '';
@@ -31,9 +31,9 @@ export class ArwikiVotesService {
     }
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'VoteProposal'},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'StampWiki' },
+      { name: 'Arwiki-Type', value: 'VoteProposal' },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'propose',
@@ -43,7 +43,7 @@ export class ArwikiVotesService {
       qty: _qty,
       lockLength: _lockLength
     };
-    
+
     return this._warp.writeInteraction(
       this._arwikiToken.contractAddress, jwk, input, tags
     );
@@ -52,15 +52,15 @@ export class ArwikiVotesService {
   addVoteBurnVault(
     _target: string,
     _note: string,
-    _privateKey: JWKInterface|'use_wallet',
+    _privateKey: JWKInterface | 'use_wallet',
     _arwikiVersion: string
   ) {
     const type = 'burnVault';
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'VoteProposal'},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'StampWiki' },
+      { name: 'Arwiki-Type', value: 'VoteProposal' },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'propose',
@@ -68,7 +68,7 @@ export class ArwikiVotesService {
       note: _note,
       target: _target
     };
-    
+
     return this._warp.writeInteraction(
       this._arwikiToken.contractAddress, jwk, input, tags
     );
@@ -76,22 +76,22 @@ export class ArwikiVotesService {
 
   addVoteIndicative(
     _note: string,
-    _privateKey: JWKInterface|'use_wallet',
+    _privateKey: JWKInterface | 'use_wallet',
     _arwikiVersion: string
   ) {
     const type = 'indicative';
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'VoteProposal'},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'StampWiki' },
+      { name: 'Arwiki-Type', value: 'VoteProposal' },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'propose',
       type: type,
       note: _note
     };
-    
+
     return this._warp.writeInteraction(
       this._arwikiToken.contractAddress, jwk, input, tags
     );
@@ -100,17 +100,17 @@ export class ArwikiVotesService {
   addVoteSetSettings(
     _key: string,
     _note: string,
-    _value: string|number,
+    _value: string | number,
     _recipient: string,
-    _privateKey: JWKInterface|'use_wallet',
+    _privateKey: JWKInterface | 'use_wallet',
     _arwikiVersion: string
   ) {
     const type = 'set';
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'VoteProposal'},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'StampWiki' },
+      { name: 'Arwiki-Type', value: 'VoteProposal' },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'propose',
@@ -120,7 +120,7 @@ export class ArwikiVotesService {
       value: _value,
       note: _note
     };
-    
+
     return this._warp.writeInteraction(
       this._arwikiToken.contractAddress, jwk, input, tags
     );
@@ -148,9 +148,9 @@ export class ArwikiVotesService {
   ) {
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'FinalizeVote'},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'StampWiki' },
+      { name: 'Arwiki-Type', value: 'FinalizeVote' },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'finalize',
@@ -172,9 +172,9 @@ export class ArwikiVotesService {
   ) {
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'SubmitVote'},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'StampWiki' },
+      { name: 'Arwiki-Type', value: 'SubmitVote' },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'vote',

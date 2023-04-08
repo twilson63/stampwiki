@@ -88,9 +88,7 @@
 		"LABEL_READING_TIME": "Reading Time:",
 		"LABEL_READING_TIME_RES_COMPOSED": "{{ minutes }}' {{ seconds }}\""
 	},
-	"NOT_FOUND": {
-
-	},
+	"NOT_FOUND": {},
 	"CREATE_PAGE": {
 		"TITLE": "Create page",
 		"FRM_TITLE": "Title",
@@ -108,7 +106,7 @@
 		"INPUT_SEARCH_LABEL": "Search the arwiki",
 		"INPUT_SEARCH_PLACEHOLDER": "",
 		"LBL_DEFAULT_LANG": "Default language",
-		"LBL_SELECT_LANG":" Select language",
+		"LBL_SELECT_LANG": " Select language",
 		"BTN_TXT_GO": "Go!"
 	},
 	"FOOTER": {
@@ -185,7 +183,7 @@
 		}
 	},
 	"LOADING": {
-		"QUOTES_TITLE" : "Did you know?",
+		"QUOTES_TITLE": "Did you know?",
 		"QUOTES": {
 			"0": "Arweave is a protocol that allows you to store data permanently, sustainably, with a single upfront fee.",
 			"1": "On top of the core Arweave protocol lives the permaweb: A global, permanent web of pages and applications that live forever.",
@@ -329,9 +327,9 @@
 		"BTN_TRANSFER": "Token transfer",
 		"BTN_VAULT": "Vault",
 		"LABEL_TOTAL_AR_BALANCE": "Total AR Balance",
-		"LABEL_WIKI_UNLOCKED": "$WIKI unlocked",
-		"LABEL_WIKI_IN_VAULT": "$WIKI in vault",
-		"LABEL_WIKI_STAKED": "$WIKI staked",
+		"LABEL_WIKI_UNLOCKED": "STAMP_WIKI unlocked",
+		"LABEL_WIKI_IN_VAULT": "STAMP_WIKI in vault",
+		"LABEL_WIKI_STAKED": "STAMP_WIKI staked",
 		"LABEL_LAST_TX_PROCESSED": "Last tx processed",
 		"TITLE_SECONDARY": "PST Settings",
 		"LABEL_TOTAL_SUPPLY": "Total supply",
@@ -340,7 +338,7 @@
 		"COLUMN_VALUE": "Value"
 	},
 	"TOKEN_TRANSFER_DIALOG": {
-		"TITLE": "$WIKI Token Transfer",
+		"TITLE": "STAMP_WIKI Token Transfer",
 		"RECIPIENT": "Recipient",
 		"AMOUNT": "Amount",
 		"MAX": "Use maximum available",
@@ -348,7 +346,7 @@
 		"TOKENS_SENT": "🥳 Tokens sent! You can follow your tx status here:",
 		"SEND": "Send",
 		"CLOSE_MSG": "You can close this window now.",
-		"TOTAL_AVAILABLE": "Total $WIKI available:"
+		"TOTAL_AVAILABLE": "Total STAMP_WIKI available:"
 	},
 	"VOTES": {
 		"BREADCRUMB_LABEL": "Votes",

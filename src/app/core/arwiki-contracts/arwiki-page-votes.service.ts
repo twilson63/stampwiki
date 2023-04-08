@@ -10,13 +10,13 @@ import { ArweaveService } from '../arweave.service';
 })
 export class ArwikiPageVotesService {
 
-  
+
   constructor(
     private _arwikiToken: ArwikiTokenContract,
     private _warp: WarpContractsService,
     private _arweave: ArweaveService,) { }
 
-  
+
   /*
   * @dev Upvote/downvote page
   */
@@ -32,9 +32,9 @@ export class ArwikiPageVotesService {
   ) {
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'VotePageAndDonate'},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'StampWiki' },
+      { name: 'Arwiki-Type', value: 'VotePageAndDonate' },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'votePage',
@@ -43,7 +43,7 @@ export class ArwikiPageVotesService {
       vote: _vote,
     };
     _qty = this._arweave.arToWinston(_qty);
-    const transfer = {target: _target, winstonQty: _qty};
+    const transfer = { target: _target, winstonQty: _qty };
     const strict = true;
     const disableBundler = true;
     return this._warp.writeInteraction(

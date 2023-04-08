@@ -41,7 +41,7 @@ export class ArwikiPagesService {
           const numUpdates = _state.pages[_langCode][slug].updates.length;
           acum[slug].id = _state.pages[_langCode][slug].updates[numUpdates - 1].tx;
           acum[slug].lastUpdateAt = _state.pages[_langCode][slug].updates[numUpdates - 1].at;
-          
+
           return acum;
         }, {});
         return pages;
@@ -68,14 +68,14 @@ export class ArwikiPagesService {
 
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'Validation'},
-      {name: 'Arwiki-Page-Id', value: _pageId},
-      {name: 'Arwiki-Page-Slug', value: _slug},
-      {name: 'Arwiki-Page-Category', value: _category},
-      {name: 'Arwiki-Page-Lang', value: _langCode},
-      {name: 'Arwiki-Page-Value', value: `${_pageValue}`},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'StampWiki' },
+      { name: 'Arwiki-Type', value: 'Validation' },
+      { name: 'Arwiki-Page-Id', value: _pageId },
+      { name: 'Arwiki-Page-Slug', value: _slug },
+      { name: 'Arwiki-Page-Category', value: _category },
+      { name: 'Arwiki-Page-Lang', value: _langCode },
+      { name: 'Arwiki-Page-Value', value: `${_pageValue}` },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'approvePage',
@@ -128,7 +128,7 @@ export class ArwikiPagesService {
   getAllPages(
     _langCode: string,
     _numPages: number = -1,
-    _reload=false
+    _reload = false
   ): Observable<any> {
     return this._arwikiToken.getState(_reload).pipe(
       map((_state: any) => {
@@ -148,7 +148,7 @@ export class ArwikiPagesService {
           const numUpdates = _state.pages[_langCode][slug].updates.length;
           acum[slug].id = _state.pages[_langCode][slug].updates[numUpdates - 1].tx;
           acum[slug].lastUpdateAt = _state.pages[_langCode][slug].updates[numUpdates - 1].at;
-          
+
           return acum;
         }, {});
         return pages;
@@ -166,10 +166,10 @@ export class ArwikiPagesService {
     return this._arwikiToken.getState().pipe(
       map((_state: any) => {
         if (_state &&
-            Object.prototype.hasOwnProperty.call(_state, 'pages') &&
-            Object.prototype.hasOwnProperty.call(_state.pages, _langCode) &&
-            Object.prototype.hasOwnProperty.call(_state.pages[_langCode], _slug) 
-          ) {
+          Object.prototype.hasOwnProperty.call(_state, 'pages') &&
+          Object.prototype.hasOwnProperty.call(_state.pages, _langCode) &&
+          Object.prototype.hasOwnProperty.call(_state.pages[_langCode], _slug)
+        ) {
           let page = _state.pages[_langCode][_slug];
           if (page.updates.length > 0) {
             return page.updates[page.updates.length - 1].tx;
@@ -234,7 +234,7 @@ export class ArwikiPagesService {
   getApprovedPagesByCategory(
     _langCode: string,
     _categories: string[],
-    _onlyActivePages=true
+    _onlyActivePages = true
   ): Observable<ArwikiPageIndex> {
     return this._arwikiToken.getState().pipe(
       map((_state: any) => {
@@ -253,7 +253,7 @@ export class ArwikiPagesService {
           acum[slug].slug = slug;
           acum[slug].id = _state.pages[_langCode][slug].updates[numUpdates - 1].tx;
           acum[slug].lastUpdateAt = _state.pages[_langCode][slug].updates[numUpdates - 1].at;
-          
+
           return acum;
         }, {});
         return pages;
@@ -279,7 +279,7 @@ export class ArwikiPagesService {
       data
     }, jwk);
     tx.addTag('Content-Type', 'text/plain');
-    tx.addTag('Service', 'ArWiki');
+    tx.addTag('Service', 'StampWiki');
     tx.addTag('Arwiki-Type', 'PageRejected');
     tx.addTag('Arwiki-Page-Id', _pageId);
     tx.addTag('Arwiki-Page-Slug', _slug);
@@ -298,8 +298,8 @@ export class ArwikiPagesService {
   *  @dev Get the full structure for all pages
   */
   getAllPagesByLangCode(
-    _onlyActive=false,
-    _reload=false
+    _onlyActive = false,
+    _reload = false
   ): Observable<any> {
     return this._arwikiToken.getState(_reload).pipe(
       map((_state: any) => {
@@ -319,7 +319,7 @@ export class ArwikiPagesService {
             const numUpdates = acum[langCode][slug].updates.length;
             acum[langCode][slug].id = acum[langCode][slug].updates[numUpdates - 1].tx;
             acum[langCode][slug].lastUpdateAt = acum[langCode][slug].updates[numUpdates - 1].at;
-          }         
+          }
           return acum;
         }, {});
         return pages;

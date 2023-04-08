@@ -25,11 +25,11 @@ export class ArwikiPageSponsorService {
   ) {
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'StopStake'},
-      {name: 'Arwiki-Page-Slug', value: _slug},
-      {name: 'Arwiki-Page-Lang', value: _langCode},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'StampWiki' },
+      { name: 'Arwiki-Type', value: 'StopStake' },
+      { name: 'Arwiki-Page-Slug', value: _slug },
+      { name: 'Arwiki-Page-Lang', value: _langCode },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'stopPageSponsorshipAndDeactivatePage',
@@ -56,13 +56,13 @@ export class ArwikiPageSponsorService {
   ) {
     const jwk = _privateKey;
     const tags = [
-      {name: 'Service', value: 'ArWiki'},
-      {name: 'Arwiki-Type', value: 'UpdateSponsor'},
-      {name: 'Arwiki-Page-Slug', value: _slug},
-      {name: 'Arwiki-Page-Category', value: _category},
-      {name: 'Arwiki-Page-Lang', value: _langCode},
-      {name: 'Arwiki-Page-Value', value: `${_pageValue}`},
-      {name: 'Arwiki-Version', value: _arwikiVersion},
+      { name: 'Service', value: 'StampWiki' },
+      { name: 'Arwiki-Type', value: 'UpdateSponsor' },
+      { name: 'Arwiki-Page-Slug', value: _slug },
+      { name: 'Arwiki-Page-Category', value: _category },
+      { name: 'Arwiki-Page-Lang', value: _langCode },
+      { name: 'Arwiki-Page-Value', value: `${_pageValue}` },
+      { name: 'Arwiki-Version', value: _arwikiVersion },
     ];
     const input = {
       function: 'updatePageSponsor',

@@ -5,16 +5,16 @@ import { UserSettingsService } from '../../core/user-settings.service';
 import { ArweaveService } from '../../core/arweave.service';
 import { MatDialog } from '@angular/material/dialog';
 import {
-  FileManagerDialogComponent 
+  FileManagerDialogComponent
 } from '../../shared/file-manager-dialog/file-manager-dialog.component';
 import {
-  UploadFileDialogComponent 
+  UploadFileDialogComponent
 } from '../../shared/upload-file-dialog/upload-file-dialog.component';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UtilsService } from '../../core/utils.service';
-import { Subscription, of, from } from 'rxjs'; 
+import { Subscription, of, from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ArwikiTokenContract } from '../../core/arwiki-contracts/arwiki-token.service';
 import { ActivatedRoute } from '@angular/router';
@@ -44,20 +44,20 @@ import { ArwikiPagesService } from '../../core/arwiki-contracts/arwiki-pages.ser
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit, OnDestroy {
-	public authorAddress: string = this._auth.getMainAddressSnapshot();
-	defaultTheme: string = '';
-	loadingFrm: boolean = false;
+  public authorAddress: string = this._auth.getMainAddressSnapshot();
+  defaultTheme: string = '';
+  loadingFrm: boolean = false;
   loadingPageData: boolean = false;
-	frmNew: UntypedFormGroup = new UntypedFormGroup({
-		title: new UntypedFormControl('', [Validators.required, Validators.maxLength(150)]),
-		slug: new UntypedFormControl('', [Validators.required, Validators.maxLength(150)]),
+  frmNew: UntypedFormGroup = new UntypedFormGroup({
+    title: new UntypedFormControl('', [Validators.required, Validators.maxLength(150)]),
+    slug: new UntypedFormControl('', [Validators.required, Validators.maxLength(150)]),
     category: new UntypedFormControl('', [Validators.required]),
     language: new UntypedFormControl('', [Validators.required]),
     pageValue: new UntypedFormControl(1),
     pageId: new UntypedFormControl('', [Validators.required, Validators.maxLength(50)]),
     useDispatch: new UntypedFormControl(false)
-	});
-	txmessage: string = '';
+  });
+  txmessage: string = '';
   previewImgUrl: string = '';
   previewImgUrlTX: string = '';
   pageSubscription: Subscription = Subscription.EMPTY;
@@ -90,19 +90,19 @@ export class EditComponent implements OnInit, OnDestroy {
   pageExtraMetadata: any = {};
   block: any;
   pageNotFound: boolean = false;
-  overlayRef: OverlayRef|null = null;
-  emojisPortal: ComponentPortal<EmojisComponent>|null = null;
+  overlayRef: OverlayRef | null = null;
+  emojisPortal: ComponentPortal<EmojisComponent> | null = null;
   savingPageSubscription = Subscription.EMPTY;
 
   public get title() {
-		return this.frmNew.get('title')!;
-	}
-	public get slug() {
-		return this.frmNew.get('slug')!;
-	}
-	public get category() {
-		return this.frmNew.get('category')!;
-	}
+    return this.frmNew.get('title')!;
+  }
+  public get slug() {
+    return this.frmNew.get('slug')!;
+  }
+  public get category() {
+    return this.frmNew.get('category')!;
+  }
   public get language() {
     return this.frmNew.get('language')!;
   }
@@ -116,18 +116,18 @@ export class EditComponent implements OnInit, OnDestroy {
     return this.frmNew.get('useDispatch')!;
   }
 
-	goBack() {
-  	this._location.back();
+  goBack() {
+    this._location.back();
   }
 
   constructor(
-  	private _location: Location,
+    private _location: Location,
     private _userSettings: UserSettingsService,
     private _arweave: ArweaveService,
     private _auth: AuthService,
     public _dialog: MatDialog,
-  	private _router: Router,
-  	private _utils: UtilsService,
+    private _router: Router,
+    private _utils: UtilsService,
     private _arwikiTokenContract: ArwikiTokenContract,
     private _route: ActivatedRoute,
     private _overlay: Overlay,
@@ -145,8 +145,8 @@ export class EditComponent implements OnInit, OnDestroy {
     this.language.disable();
     this.arwikiQuery = new ArwikiQuery(this._arweave.arweave);
     this.arwiki = new Arwiki(this._arweave.arweave);
-  	this.getDefaultTheme();
-    
+    this.getDefaultTheme();
+
     this.categoryListSubscription = this._arwikiCategories
       .getCategories(this.routeLang)
       .subscribe({
@@ -177,7 +177,7 @@ export class EditComponent implements OnInit, OnDestroy {
           }
           this.language!.setValue(this.routeLang);
           this.title!.enable();
-    
+
         },
         error: (error) => {
           this._utils.message(error, 'error');
@@ -212,39 +212,39 @@ export class EditComponent implements OnInit, OnDestroy {
 
 
   getDefaultTheme() {
-  	this.defaultTheme = this._userSettings.getDefaultTheme();
+    this.defaultTheme = this._userSettings.getDefaultTheme();
     this._userSettings.defaultThemeStream.subscribe(
-    	(theme) => {
-    		this.defaultTheme = theme;
-    	}
+      (theme) => {
+        this.defaultTheme = theme;
+      }
     );
   }
 
 
   getSkeletonLoaderAnimationType() {
-  	let type = 'false';
-  	if (this.defaultTheme === 'arwiki-dark') {
-  		// type = 'progress-dark';
-  	}
-  	return type;
+    let type = 'false';
+    if (this.defaultTheme === 'arwiki-dark') {
+      // type = 'progress-dark';
+    }
+    return type;
   }
 
   getSkeletonLoaderThemeNgStyle() {
-  	let ngStyle: any = {
-  		'height.px': '320',
-  		'width': '100%'
-  	};
-  	if (this.defaultTheme === 'arwiki-dark') {
-  		ngStyle['background-color'] = '#3d3d3d';
-  	}
+    let ngStyle: any = {
+      'height.px': '320',
+      'width': '100%'
+    };
+    if (this.defaultTheme === 'arwiki-dark') {
+      ngStyle['background-color'] = '#3d3d3d';
+    }
 
-  	return ngStyle;
+    return ngStyle;
   }
 
   async onSubmit() {
-  	const title = this.title!.value;
-  	const slug = this.slug!.value;
-  	const category = this.category!.value;
+    const title = this.title!.value;
+    const slug = this.slug!.value;
+    const category = this.category!.value;
     const langCode = this.language!.value;
     const content = this.simplemde.value();
     const img = this.previewImgUrlTX;
@@ -254,22 +254,22 @@ export class EditComponent implements OnInit, OnDestroy {
       this._utils.message('Please add some content to your page :)', 'error');
       return;
     }
-    
-  	this.disableForm(true);
+
+    this.disableForm(true);
 
     const target = '';
     const fee = '';
 
-  	// Save data 
+    // Save data 
     const newPage: ArwikiPage = {
-        id: '',
-        title: title,
-        slug: slug,
-        category: category,
-        language: langCode,
-        value: pageValue,
-        img: img,
-        rawContent: content
+      id: '',
+      title: title,
+      slug: slug,
+      category: category,
+      language: langCode,
+      value: pageValue,
+      img: img,
+      rawContent: content
     };
 
     const disableDispatch = !this.useDispatch!.value;
@@ -289,23 +289,23 @@ export class EditComponent implements OnInit, OnDestroy {
       }
     });
 
-  	
+
   }
 
   disableForm(disable: boolean) {
-  	if (disable) {
-  		this.title!.disable();
-	  	this.slug!.disable();
+    if (disable) {
+      this.title!.disable();
+      this.slug!.disable();
       this.pageValue!.disable();
-	  	this.category!.disable();
+      this.category!.disable();
       this.language!.disable();
       this.loadingFrm = true;
-  	} else {
-  		this.title!.enable();
-	  	this.category!.enable();
+    } else {
+      this.title!.enable();
+      this.category!.enable();
       this.pageValue!.enable();
       this.loadingFrm = false;
-  	}
+    }
   }
 
   setPreviewImage(imgUrl: string) {
@@ -316,7 +316,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
   }
 
-  
+
   /*
   *  @dev
   */
@@ -340,7 +340,7 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   loadPageData(slug: string, langCode: string) {
-     // Init page data 
+    // Init page data 
     this.pageData.title = '';
     this.pageData.img = '';
     this.pageData.id = '';
@@ -353,7 +353,7 @@ export class EditComponent implements OnInit, OnDestroy {
     this.pageSubscription = this.getPageBySlug(
       slug, langCode
     ).subscribe({
-      next: async (data: ArdbTransaction[]|ArdbBlock[]) => {
+      next: async (data: ArdbTransaction[] | ArdbBlock[]) => {
         const finalRes: any = [];
         for (let p of data) {
           const pTX: ArdbTransaction = new ArdbTransaction(p, this._arweave.arweave);
@@ -366,7 +366,7 @@ export class EditComponent implements OnInit, OnDestroy {
           const block = pTX.block;
           const extraMetadata = this.pageExtraMetadata;
 
-          
+
           finalRes.push({
             title: title,
             slug: slug,
@@ -376,7 +376,7 @@ export class EditComponent implements OnInit, OnDestroy {
             id: id,
             block: block
           });
-          
+
         }
 
         // If page exists
@@ -403,7 +403,7 @@ export class EditComponent implements OnInit, OnDestroy {
               toolbar: [
                 "bold", "italic", "heading", "|",
                 "quote", "unordered-list", "ordered-list", "strikethrough", "code", "|",
-                "link", "image", 
+                "link", "image",
                 {
                   name: "emojis",
                   action: (editor) => {
@@ -421,7 +421,7 @@ export class EditComponent implements OnInit, OnDestroy {
                   title: "Compare with original article",
                 },
                 "|",
-                "preview", "side-by-side", "fullscreen",  "|", 
+                "preview", "side-by-side", "fullscreen", "|",
                 "guide"
               ],
             });
@@ -460,22 +460,22 @@ export class EditComponent implements OnInit, OnDestroy {
   ) {
     const verifiedPagesList: string[] = [];
     return this._arwikiPages.getApprovedPages(
-        _langCode,
-        -1
-      ).pipe(
-        switchMap((verifiedPages) => {
-          const p = verifiedPages[_slug];
-          this.pageExtraMetadata = verifiedPages[_slug];
+      _langCode,
+      -1
+    ).pipe(
+      switchMap((verifiedPages) => {
+        const p = verifiedPages[_slug];
+        this.pageExtraMetadata = verifiedPages[_slug];
 
-          if (p && p.id) {
-            verifiedPagesList.push(p.id);
-          } else {
-            throw Error('Page does not exist!');
-          }
+        if (p && p.id) {
+          verifiedPagesList.push(p.id);
+        } else {
+          throw Error('Page does not exist!');
+        }
 
-          return this.arwikiQuery.getTXsData(verifiedPagesList);
-        })
-      );
+        return this.arwikiQuery.getTXsData(verifiedPagesList);
+      })
+    );
   }
 
   openEmojiMenu(editor: SimpleMDE) {
@@ -484,14 +484,14 @@ export class EditComponent implements OnInit, OnDestroy {
       throw Error('EmojiMenu not available');
     }
     const positionStrategy = this._overlay.position().flexibleConnectedTo(emojiMenu).withPositions([
-       {
-         originX: 'end',
-         originY: 'top',
-         overlayX: 'center',
-         overlayY: 'top',
-         offsetY: 32
-       }
-     ]);
+      {
+        originX: 'end',
+        originY: 'top',
+        overlayX: 'center',
+        overlayY: 'top',
+        offsetY: 32
+      }
+    ]);
 
     this.overlayRef = this._overlay.create({
       hasBackdrop: true,
@@ -514,7 +514,7 @@ export class EditComponent implements OnInit, OnDestroy {
     this.overlayRef!.backdropClick().subscribe(() => {
       this.closeEmojiMenu();
     });
-    
+
   }
 
 
@@ -524,7 +524,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
   fileManager(type: string) {
     const defLang = this._userSettings.getDefaultLang();
-    let direction: Direction = defLang.writing_system === 'LTR' ? 
+    let direction: Direction = defLang.writing_system === 'LTR' ?
       'ltr' : 'rtl';
 
     const dialogRef = this._dialog.open(
@@ -542,7 +542,7 @@ export class EditComponent implements OnInit, OnDestroy {
       });
 
     // Manually restore focus to the menu trigger
-    dialogRef.afterClosed().subscribe((res: {id: string, type:'text'|'image'|'audio'|'video'|''}) => { 
+    dialogRef.afterClosed().subscribe((res: { id: string, type: 'text' | 'image' | 'audio' | 'video' | '' }) => {
       if (res) {
         this.setPreviewImage(res.id);
       }
@@ -551,7 +551,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
   uploadFile(type: string) {
     const defLang = this._userSettings.getDefaultLang();
-    let direction: Direction = defLang.writing_system === 'LTR' ? 
+    let direction: Direction = defLang.writing_system === 'LTR' ?
       'ltr' : 'rtl';
 
     const dialogRef = this._dialog.open(
@@ -570,7 +570,7 @@ export class EditComponent implements OnInit, OnDestroy {
     );
 
     // Manually restore focus to the menu trigger
-    dialogRef.afterClosed().subscribe((res: { id: string, type: 'text'|'image'|'audio'|'video'|'' }|null|undefined) => {
+    dialogRef.afterClosed().subscribe((res: { id: string, type: 'text' | 'image' | 'audio' | 'video' | '' } | null | undefined) => {
       if (res) {
         this.setPreviewImage(res.id);
       }
@@ -584,8 +584,8 @@ export class EditComponent implements OnInit, OnDestroy {
     const jwk = this._auth.getPrivateKey();
     const data = _newPage.rawContent;
     const loginMethod = this._auth.loginMethod;
-    const tags: {name: string, value: string}[] = [
-      { name: 'Service', value: 'ArWiki' },
+    const tags: { name: string, value: string }[] = [
+      { name: 'Service', value: 'StampWiki' },
       { name: 'Arwiki-Type', value: 'PageUpdate' },
       { name: 'Arwiki-Page-Id', value: _newPage.id },
       { name: 'Arwiki-Page-Slug', value: _newPage.slug },
@@ -606,7 +606,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
   compare(newPageContent: string, slug: string) {
     const defLang = this._userSettings.getDefaultLang();
-    let direction: Direction = defLang.writing_system === 'LTR' ? 
+    let direction: Direction = defLang.writing_system === 'LTR' ?
       'ltr' : 'rtl';
 
     const dialogRef = this._dialog.open(DialogCompareComponent, {
@@ -620,7 +620,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe({
       next: () => {
-        
+
       },
       error: (error) => {
         this._utils.message(`${error}`, 'error');
